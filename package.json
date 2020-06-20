@@ -1,0 +1,31 @@
+{
+  "name": "excel",
+  "version": "1.0.0",
+  "description": "Pure JavaScript Excel",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/obscurecore/Excel.git"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "excel"
+  ],
+  "author": "Potapov Ruslan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/obscurecore/Excel/issues"
+  },
+  "homepage": "https://github.com/obscurecore/Excel#readme",
+  "private": true,
+  "devDependencies": {
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  }
+}
