@@ -13,13 +13,19 @@ const CopyPlugin = require('copy-webpack-plugin');
 // extracts CSS into separate files. It creates a CSS file per JS file which contains CSS
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const isProd = process.env.NODE_ENV === 'production'
+const isDev = !isProd
 
+// function to add pattern
+const filename = ext => isDev ? `bundle.${ext}` : `bundle.[hash].${ext}`
+
+// entry point
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
-    entry: './index.js',
+    entry: ['@babel/polyfill','./index.js'],
     output: {
-        filename: 'bundle.[hash].js',
+        filename: filename('js'),
         path: path.resolve(__dirname, 'dist')
     },
     resolve: {
@@ -31,10 +37,22 @@ module.exports = {
             '@core': path.resolve(__dirname,'src/core ')
         }
     },
+    // This option controls if and how source maps are generated.
+    devtool: isDev ? 'source-map' : false,
+
+    //  Quickly develop an application
+    devServer: {
+        port: 3000,
+        hot: isDev
+    },
     plugins: [
         new CleanWebpackPlugin(),
         new HTMLWebpackPlugin({
-            template: 'index.html'
+            template: 'index.html',
+            minify: {
+                removeComments: isProd,
+                collapseWhitespace: isProd
+            }
         }),
         new CopyPlugin({
             patterns: [
@@ -44,9 +62,10 @@ module.exports = {
             ],
         }),
         new MiniCssExtractPlugin({
-            filename: 'bundle.[hash].css'
+            filename: filename('css')
         })
     ],
+    // loaders
     module: {
         rules: [
             {
@@ -59,6 +78,7 @@ module.exports = {
                 ],
             },
             {
+                // Сompiler for writing next generation JavaScript.
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: {
