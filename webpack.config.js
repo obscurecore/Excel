@@ -1,17 +1,13 @@
 // path for source code
 const path = require('path')
-
 // clean output
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 // creation of HTML files to serve your webpack bundles
 const HTMLWebpackPlugin = require('html-webpack-plugin')
-
 // Copies individual files or entire directories, which already exist, to the build directory
-const CopyPlugin = require('copy-webpack-plugin');
-
+const CopyPlugin = require('copy-webpack-plugin')
 // extracts CSS into separate files. It creates a CSS file per JS file which contains CSS
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
 const isDev = !isProd
@@ -35,8 +31,6 @@ const jsLoaders = () => {
 
   return loaders
 }
-
-
 // entry point
 module.exports = {
   context: path.resolve(__dirname, 'src'),
@@ -51,13 +45,12 @@ module.exports = {
     alias: {
       // import '../../../../../../core/Component
       // import '@core/Component
-      '@': path.resolve(__dirname, 'src '),
-      '@core': path.resolve(__dirname, 'src/core ')
+      '@': path.resolve(__dirname, 'src'),
+      '@core': path.resolve(__dirname, 'src/core')
     }
   },
   // This option controls if and how source maps are generated.
   devtool: isDev ? 'source-map' : false,
-
   //  Quickly develop an application
   devServer: {
     port: 3000,
@@ -72,13 +65,12 @@ module.exports = {
         collapseWhitespace: isProd
       }
     }),
-    new CopyPlugin({
-      patterns: [
-        {from: path.resolve(__dirname, 'src/favicon.ico'),
-          to: path.resolve(__dirname, 'dist')
-        }
-      ],
-    }),
+    new CopyPlugin([
+      {
+        from: path.resolve(__dirname, 'src/favicon.ico'),
+        to: path.resolve(__dirname, 'dist')
+      }
+    ]),
     new MiniCssExtractPlugin({
       filename: filename('css')
     })

@@ -1,14 +1,7 @@
-import {DomListener} from './DomListener';
-
-/**
- * Common template and logic for component
- *
- *
- * toHTML() abstract base method that define for every instance and return own row of template
- */
+import {DomListener} from '@core/DomListener'
 
 export class ExcelComponent extends DomListener {
-
+  // Возвращает шаблон компонента
   toHTML() {
     return ''
   }
