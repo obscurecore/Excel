@@ -1,3 +1,5 @@
+import {$} from '@core/dom';
+
 export class Excel {
   // eslint-disable-next-line valid-jsdoc
   /**
@@ -11,11 +13,14 @@ export class Excel {
 
   // return root node for Excel
   getRoot() {
-    const $root = document.createElement('div');
+    // create tagName and append classList
+    const $root = $.create('div', 'excel')
     // Component - get access to Class and create instance
     this.components.forEach(Component => {
-      const component = new Component();
-      $root.insertAdjacentHTML('beforeend', component.toHTML());
+      const $el = $.create('div', Component.className)
+      const component = new Component($el);
+      $el.innerHTML = component.toHTML();
+      $root.append($el)
     });
 
     return $root;
